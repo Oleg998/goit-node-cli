@@ -10,7 +10,7 @@ export async function listContacts() {
 
 export async function getContactById(contactId) {
   const allContacts = await listContacts();
-  const result = allContacts.find((item) => item.id === id);
+  const result = allContacts.find((item) => item.id === contactId);
   return result || null;
 };
 
@@ -20,7 +20,7 @@ export async function addContact(name, email, phone) {
     id: nanoid(),
     name, 
     email,
-    phone
+    phone,
   };
   contact.push(newContact);
   await fs.writeFile(contactsPath, JSON.stringify(contact, null, 2));
@@ -29,7 +29,7 @@ export async function addContact(name, email, phone) {
 
 export async function removeContact(contactId) {
   const allContacts = await listContacts();
-  const index = allContacts.findIndex((item) => item.id === id);
+  const index = allContacts.findIndex((item) => item.id === contactId);
   if (index === -1) {
     return null;
   }
