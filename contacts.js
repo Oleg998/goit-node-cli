@@ -3,12 +3,12 @@ import { nanoid } from "nanoid";
 import path from "path";
 const contactsPath = path.resolve("db", "contacts.json");
 
-export const getAllContacts = async () => {
+export const listContacts = async () => {
   const data = await fs.readFile(contactsPath);
   return JSON.parse(data);
 };
 
-export const getContactByID = async (id) => {
+export const getContactById = async (id) => {
   const allContacts = await getAllContacts();
   const result = allContacts.find((item) => item.id === id);
   return result || null;
@@ -25,7 +25,7 @@ export const addContact = async (data) => {
   return newContact;
 };
 
-export const deleteContactById = async (id) => {
+export const removeContact = async (id) => {
   const allContacts = await getAllContacts();
   const index = allContacts.findIndex((item) => item.id === id);
   if (index === -1) {
