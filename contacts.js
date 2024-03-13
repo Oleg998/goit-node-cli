@@ -3,29 +3,31 @@ import { nanoid } from "nanoid";
 import path from "path";
 const contactsPath = path.resolve("db", "contacts.json");
 
-export const listContacts = async () => {
+export async function listContacts() {
   const data = await fs.readFile(contactsPath);
   return JSON.parse(data);
 };
 
-export const getContactById = async (id) => {
+export async function getContactById(contactId) {
   const allContacts = await getAllContacts();
   const result = allContacts.find((item) => item.id === id);
   return result || null;
 };
 
-export const addContact = async (data) => {
+export async function addContact(name, email, phone) {
   const contact = await getAllContacts();
   const newContact = {
     id: nanoid(),
-    ...data,
+    name, 
+    email,
+    phone
   };
   contact.push(newContact);
   await fs.writeFile(contactsPath, JSON.stringify(contact, null, 2));
   return newContact;
 };
 
-export const removeContact = async (id) => {
+export async function removeContact(contactId) {
   const allContacts = await getAllContacts();
   const index = allContacts.findIndex((item) => item.id === id);
   if (index === -1) {
